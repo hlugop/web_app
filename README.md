@@ -193,3 +193,42 @@ Esta aplicación es una **versión inicial y funcional** que cumple con los obje
 *   Pruebas unitarias y de integración más exhaustivas.
 *   Mejoras en la interfaz de usuario y experiencia de usuario (UI/UX).
 
+## Consideraciones para el Despliegue (Producción)
+
+Para desplegar esta aplicación en un entorno de producción, considera las siguientes recomendaciones:
+
+1.  **Configuración de Entorno:**
+    *   **Variables de Entorno:** Utiliza variables de entorno para todas las configuraciones sensibles o específicas del entorno.
+        *   **Backend (`.env` file, gestionado por el hosting/PM2):**
+            *   `PORT`: Puerto para el servidor Node.js (ej. `3001` o el asignado por el proveedor de hosting).
+            *   `NODE_ENV=production`: Para optimizaciones de Express y otras dependencias.
+            *   `CORS_ORIGIN_WHITELIST`: Una lista separada por comas de los dominios frontend permitidos (ej. `https://tu-dominio-frontend.com`).
+        *   **Frontend (archivo `.env.production` o variables de entorno del build system):**
+            *   `VITE_API_URL`: La URL completa del backend API de producción (ej. `https://api.tu-dominio.com/api` o `/api` si se usa un proxy).
+    *   Asegúrate de que los archivos `.env` locales no se suban al control de versiones (deben estar en `.gitignore`). Proporciona archivos `.env.example` como guía.
+
+2.  **Backend:**
+    *   **CORS:** Configura el middleware CORS en el backend para permitir solicitudes únicamente desde el/los dominio(s) de tu frontend de producción (usando la variable `CORS_ORIGIN_WHITELIST`).
+    *   **Process Manager:** Utiliza un gestor de procesos como PM2 o nodemon en modo producción (aunque PM2 es más robusto) para mantener la aplicación Node.js en ejecución continua, gestionar logs y reinicios automáticos.
+    *   **HTTPS:** Asegúrate de que el servidor Node.js (o el proxy inverso) esté configurado para servir sobre HTTPS.
+
+3.  **Frontend:**
+    *   **Build:** Genera los archivos estáticos optimizados ejecutando `npm run build` en el directorio `frontend/`. Esto creará un directorio `dist/`.
+    *   **Servidor Web:** Sirve el contenido del directorio `frontend/dist/` utilizando un servidor web estático como Nginx, Apache, Vercel, Netlify, GitHub Pages, etc.
+
+4.  **Estrategia de Despliegue Común (Proxy Inverso):**
+    *   Considera servir tanto el frontend estático como la API del backend bajo el mismo dominio para simplificar la configuración de CORS y la gestión de SSL.
+    *   Puedes usar un servidor web como Nginx como proxy inverso:
+        *   Nginx sirve los archivos estáticos del frontend.
+        *   Nginx redirige las solicitudes a una ruta específica (ej. `/api/*`) al servidor backend Node.js que se ejecuta en su propio puerto.
+
+5.  **Base de Datos:**
+    *   Para un uso en producción real y escalable, reemplaza el archivo `db.json` por un sistema de base de datos más robusto como PostgreSQL, MySQL, MongoDB, etc. Esto requerirá modificaciones en la lógica de acceso a datos del backend.
+
+6.  **Seguridad Adicional:**
+    *   Implementa cabeceras de seguridad HTTP (ej. usando Helmet.js para Express).
+    *   Considera la limitación de velocidad (rate limiting) para proteger contra ataques de fuerza bruta o abuso.
+
+7.  **Logging y Monitorización:**
+    *   Configura un sistema de logging más detallado y persistente para el backend en producción.
+    *   Utiliza herramientas de monitorización para supervisar el estado y rendimiento de la aplicación.
