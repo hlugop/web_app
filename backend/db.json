@@ -1,0 +1,60 @@
+{
+  "leads": [
+    {
+      "id": 1,
+      "nombre": "Juan Rodriguez",
+      "email": "juan.rodriguez@example.com",
+      "telefono": "555-0101",
+      "empresa": "Soluciones Digitales Avanzadas",
+      "fechaRegistro": "2023-11-15"
+    },
+    {
+      "id": 2,
+      "nombre": "Laura Gómez",
+      "email": "laura.gomez@example.com",
+      "telefono": "555-0202",
+      "empresa": "Consultoría Global Tech",
+      "fechaRegistro": "2023-11-20"
+    },
+    {
+      "id": 3,
+      "nombre": "Pedro Martínez",
+      "email": "pedro.martinez@example.com",
+      "telefono": "555-0303",
+      "empresa": "Innovaciones Creativas Co.",
+      "fechaRegistro": "2023-11-25"
+    }
+  ],
+  "citas": [
+    {
+      "id": 1,
+      "leadId": 1,
+      "fecha": "2024-08-01",
+      "hora": "09:30",
+      "duracion": 30,
+      "estado": "programada",
+      "notas": "Primera reunión de consultoría sobre estrategias de marketing digital.",
+      "fechaCreacion": "2024-07-25T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "leadId": 2,
+      "fecha": "2024-08-02",
+      "hora": "11:00",
+      "duracion": 30,
+      "estado": "programada",
+      "notas": "Discusión sobre la implementación de soluciones en la nube.",
+      "fechaCreacion": "2024-07-25T11:30:00.000Z"
+    },
+    {
+      "id": 3,
+      "leadId": 1,
+      "fecha": "2024-08-05",
+      "hora": "14:00",
+      "duracion": 60,
+      "estado": "programada",
+      "notas": "Sesión de planificación detallada del proyecto de desarrollo web.",
+      "fechaCreacion": "2024-07-26T09:15:00.000Z"
+    }
+  ]
+}
